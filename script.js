@@ -1,16 +1,22 @@
 // タブ切り替え
 function openTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    // すべてのコンテンツを一旦非表示にする
+    document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.remove('active');
+        c.style.display = 'none'; // 明示的に非表示
+    });
+    
+    // すべてのボタンからactiveを消す
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+    
+    // 選択されたタブだけ表示する
+    const selectedTab = document.getElementById(tabId);
+    selectedTab.classList.add('active');
+    selectedTab.style.display = 'block'; // 明示的に表示
+    
+    // ボタンをアクティブにする
     event.currentTarget.classList.add('active');
 }
-
-const jstInput = document.getElementById('jstInput');
-const utcInput = document.getElementById('utcInput');
-const utcResult = document.getElementById('utcResult');
-const jstResult = document.getElementById('jstResult');
-const copyText = document.getElementById('copyText');
 
 // 初期値（現在時刻）の設定
 window.onload = () => {
