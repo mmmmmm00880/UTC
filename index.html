@@ -3,46 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Converter - アジサイ</title>
+    <title>UTC↔JST 変換ツール</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <div class="card">
-        <h1>時刻変換ツール</h1>
+    <h2>UTC ↔ JST 変換</h2>
+
+    <div class="tab-menu">
+        <button id="tab-jst-to-utc" class="active" onclick="switchTab('jst-to-utc')">JST → UTC</button>
+        <button id="tab-utc-to-jst" onclick="switchTab('utc-to-jst')">UTC → JST</button>
+    </div>
+
+    <div id="panel-jst-to-utc" class="panel">
+        <label for="jstInput">日本標準時 (JST)</label>
+        <input type="datetime-local" id="jstInput">
         
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('jstToUtc')">JST → UTC</button>
-            <button class="tab-btn" onclick="switchTab('utcToJst')">UTC → JST</button>
+        <div class="result-box">
+            <label>世界標準時 (UTC)</label>
+            <div id="utcResult" class="time-display"></div>
         </div>
 
-        <div id="jstToUtc" class="converter-content">
-            <div class="input-group">
-                <label for="jstInput">日本標準時 (JST)</label>
-                <input type="datetime-local" id="jstInput">
-            </div>
-            <div class="result-group">
-                <p class="label">世界標準時 (UTC)</p>
-                <p id="utcOutput" class="result-text">-</p>
-            </div>
+        <textarea id="jstCopyArea" readonly></textarea>
+        <button class="copy-btn" onclick="copyToClipboard('jstCopyArea')">コピー</button>
+    </div>
+
+    <div id="panel-utc-to-jst" class="panel" style="display: none;">
+        <label for="utcInput">世界標準時 (UTC)</label>
+        <input type="datetime-local" id="utcInput">
+        
+        <div class="result-box">
+            <label>日本標準時 (JST)</label>
+            <div id="jstResult" class="time-display"></div>
         </div>
 
-        <div id="utcToJst" class="converter-content" style="display: none;">
-            <div class="input-group">
-                <label for="utcInput">世界標準時 (UTC)</label>
-                <input type="datetime-local" id="utcInput">
-            </div>
-            <div class="result-group">
-                <p class="label">日本標準時 (JST)</p>
-                <p id="jstOutput" class="result-text">-</p>
-            </div>
-        </div>
-
-        <div class="copy-section">
-            <textarea id="copyArea" readonly placeholder="変換するとここにコピー用テキストが生成されます"></textarea>
-            <button class="copy-btn" onclick="copyToClipboard()">テキストをコピー</button>
-        </div>
+        <textarea id="utcCopyArea" readonly></textarea>
+        <button class="copy-btn" onclick="copyToClipboard('utcCopyArea')">コピー</button>
     </div>
 </div>
 
