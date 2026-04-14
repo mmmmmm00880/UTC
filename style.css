@@ -1,6 +1,6 @@
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* 淡い水色 */
+    background: linear-gradient(135deg, #eef2f3 0%, #e0eafc 100%); /* 淡い水色 */
     display: flex;
     justify-content: center;
     padding-top: 50px;
@@ -8,16 +8,22 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(100, 100, 150, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(100, 100, 150, 0.1);
     width: 90%;
     max-width: 380px;
-    border: 1px solid #dcdde1;
+    border: 1px solid #e1e8ed;
 }
 
-/* アジサイ風タブカラー */
+/* アジサイカラーのタブ */
+.tabs {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
 .tab-btn {
     flex: 1;
     padding: 12px;
@@ -25,7 +31,8 @@ body {
     background: none;
     cursor: pointer;
     font-size: 15px;
-    color: #88a;
+    color: #95a5a6;
+    transition: 0.3s;
 }
 
 .tab-btn.active {
@@ -34,50 +41,86 @@ body {
     font-weight: bold;
 }
 
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #576574;
+}
+
 .date-picker {
     width: 100%;
     padding: 12px;
     border: 2px solid #dae1e7;
     border-radius: 10px;
     font-size: 16px;
-    box-sizing: border-box; /* ←これで右側のはみ出しを防ぎます */
+    box-sizing: border-box; /* はみ出し防止 */
     outline: none;
+    color: #2d3436;
 }
 
 .date-picker:focus {
     border-color: #a29bfe;
 }
 
+.result-display {
+    background: #f8faff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.result-display p {
+    margin: 0;
+    font-size: 14px;
+    color: #8395a7;
+    line-height: 1.6;
+}
+
 .highlight {
     display: block;
-    margin-top: 5px;
+    font-size: 1.4em;
     font-weight: bold;
-    color: #4834d4; /* 深い青 */
-    font-size: 1.3em;
+    color: #4834d4; /* 深いアジサイの青 */
 }
 
-#copyBtn {
-    margin-top: 15px;
-    width: 100%;
-    padding: 12px;
-    background: #6c5ce7; /* 紫 */
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#copyBtn:hover {
-    background: #a29bfe; /* 薄紫 */
+.copy-area {
+    margin-top: 20px;
+    border-top: 1px dashed #ced6e0;
+    padding-top: 20px;
 }
 
 textarea {
     width: 100%;
     box-sizing: border-box; /* はみ出し防止 */
     border-radius: 8px;
-    border: 1px solid #d1d8e0;
-    padding: 10px;
-    background: #f1f2f6;
+    border: 1px solid #dfe6e9;
+    padding: 12px;
+    background: #fdfdfd;
+    font-size: 14px;
+    color: #2d3436;
+    resize: none;
+}
+
+#copyBtn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 14px;
+    background: #6c5ce7; /* アジサイ紫 */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#copyBtn:hover {
+    background: #a29bfe;
 }
