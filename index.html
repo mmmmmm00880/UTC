@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Converter JST ↔ UTC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('jst-to-utc')">JST → UTC</button>
+            <button class="tab-btn" onclick="openTab('utc-to-jst')">UTC → JST</button>
+        </div>
+
+        <div id="jst-to-utc" class="tab-content active">
+            <div class="input-group">
+                <label>日本時間 (JST)</label>
+                <input type="datetime-local" id="jstInput" class="date-picker">
+            </div>
+            <div class="result-display">
+                <p>世界標準時 (UTC): <span id="utcResult" class="highlight">-</span></p>
+            </div>
+        </div>
+
+        <div id="utc-to-jst" class="tab-content">
+            <div class="input-group">
+                <label>世界標準時 (UTC)</label>
+                <input type="datetime-local" id="utcInput" class="date-picker">
+            </div>
+            <div class="result-display">
+                <p>日本時間 (JST): <span id="jstResult" class="highlight">-</span></p>
+            </div>
+        </div>
+
+        <div class="copy-area">
+            <label>コピー用テキスト (h:mm形式)</label>
+            <textarea id="copyText" readonly rows="2" placeholder="時間を入力すると表示されます"></textarea>
+            <button id="copyBtn">コピー</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
