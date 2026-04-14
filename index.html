@@ -13,7 +13,7 @@
             <button class="tab-btn" onclick="openTab('utc-to-jst')">UTC → JST</button>
         </div>
 
-        <div id="jst-to-utc" class="tab-content active">
+        <div id="jst-to-utc" class="tab-content active" style="display: block;">
             <div class="input-group">
                 <label>日本時間 (JST)</label>
                 <input type="datetime-local" id="jstInput" class="date-picker">
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div id="utc-to-jst" class="tab-content">
+        <div id="utc-to-jst" class="tab-content" style="display: none;">
             <div class="input-group">
                 <label>世界標準時 (UTC)</label>
                 <input type="datetime-local" id="utcInput" class="date-picker">
@@ -34,8 +34,8 @@
         </div>
 
         <div class="copy-area">
-            <label>コピー用テキスト</label>
-            <textarea id="copyText" readonly rows="2"></textarea>
+            <label>コピー用テキスト (m/d h:mm)</label>
+            <textarea id="copyText" readonly rows="2" placeholder="時間を入力してください"></textarea>
             <button id="copyBtn">コピー</button>
         </div>
     </div>
