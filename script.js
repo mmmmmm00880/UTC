@@ -1,49 +1,79 @@
-// タブ切り替えロジック
-function openTab(tabId) {
-    // コンテンツの切り替え
-    const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(content => {
-        content.classList.remove('active');
-        content.style.display = 'none';
-    });
+// 初期化：現在のローカル時刻をセット
+window.onload = () => {
+    const now = new Date();
+    const localIso = now.toLocaleString('sv-SE').replace(' ', 'T').substring(0, 16);
     
-    const selectedContent = document.getElementById(tabId);
-    selectedContent.classList.add('active');
-    selectedContent.style.display = 'block';
+    const jstInput = document.getElementById('jstInput');
+    const utcInput = document.getElementById('utcInput');
+    
+    jstInput.value = localIso;
+    utcInput.value = localIso;
+    
+    // 初回計算
+    updateConversion('jstToUtc');
+};
 
-    // ボタンの状態切り替え
+// タブ切り替え
+function switchTab(mode) {
+    const jstSection = document.getElementById('jstToUtc');
+    const utcSection = document.getElementById('utcToJst');
     const buttons = document.querySelectorAll('.tab-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    
-    // 切り替え時にコピペ枠をリセットまたは更新
-    if (tabId === 'jst-to-utc') {
-        updateFromJST();
+
+    if (mode === 'jstToUtc') {
+        jstSection.style.display = 'block';
+        utcSection.style.display = 'none';
+        buttons[0].classList.add('active');
+        buttons[1].classList.remove('active');
+        updateConversion('jstToUtc');
     } else {
-        updateFromUTC();
+        jstSection.style.display = 'none';
+        utcSection.style.display = 'block';
+        buttons[1].classList.add('active');
+        buttons[0].classList.remove('active');
+        updateConversion('utcToJst');
     }
 }
 
-const jstInput = document.getElementById('jstInput');
-const utcInput = document.getElementById('utcInput');
-const utcResult = document.getElementById('utcResult');
-const jstResult = document.getElementById('jstResult');
-const copyText = document.getElementById('copyText');
+// 変換ロジック
+function updateConversion(mode) {
+    const jstInput = document.getElementById('jstInput');
+    const utcInput = document.getElementById('utcInput');
+    const jstOutput = document.getElementById('jstOutput');
+    const utcOutput = document.getElementById('utcOutput');
+    const copyArea = document.getElementById('copyArea');
 
-// ページ読み込み時の初期設定
-window.onload = () => {
-    const now = new Date();
-    // input type="datetime-local" 用のフォーマット (yyyy-mm-ddThh:mm)
-    const tzOffset = now.getTimezoneOffset() * 60000;
-    const localISOTime = new Date(now - tzOffset).toISOString().slice(0, 16);
-    
-    jstInput.value = localISOTime;
-    utcInput.value = localISOTime;
-    
-    updateFromJST(); // 初期表示
-};
+    let jstDate, utcDate;
 
-// コピペ用フォーマット (m/d h:mm)
+    if (mode === 'jstToUtc') {
+        jstDate = new Date(jstInput.value);
+        if (isNaN(jstDate)) return;
+        // JSTから9時間引いてUTCへ
+        utcDate = new Date(jstDate.getTime() - (9 * 60 * 60 * 1000));
+        utcOutput.innerText = formatDate(utcDate);
+    } else {
+        utcDate = new Date(utcInput.value);
+        if (isNaN(utcDate)) return;
+        // UTCに9時間足してJSTへ
+        jstDate = new Date(utcDate.getTime() + (9 * 60 * 60 * 1000));
+        jstOutput.innerText = formatDate(jstDate);
+    }
+
+    // コピー用テキスト作成
+    const copyText = `日本時間 ${formatShort(jstDate)}、UTC ${formatShort(utcDate)}`;
+    copyArea.value = copyText;
+}
+
+// フォーマット関数: yyyy/m/d h:mm
+function formatDate(date) {
+    const y = date.getFullYear();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+    const h = date.getHours();
+    const min = date.getMinutes().toString().padStart(2, '0');
+    return `${y}/${m}/${d}\n${h}:${min}`;
+}
+
+// フォーマット関数: m/d h:mm (コピー用)
 function formatShort(date) {
     const m = date.getMonth() + 1;
     const d = date.getDate();
@@ -52,44 +82,23 @@ function formatShort(date) {
     return `${m}/${d} ${h}:${min}`;
 }
 
-// 画面表示用フォーマット (yyyy/m/d h:mm)
-function formatFull(date) {
-    const y = date.getFullYear();
-    const m = date.getMonth() + 1;
-    const d = date.getDate();
-    const h = date.getHours();
-    const min = date.getMinutes().toString().padStart(2, '0');
-    return `${y}/${m}/${d} ${h}:${min}`;
-}
-
-// JSTからUTCを計算
-function updateFromJST() {
-    if (!jstInput.value) return;
-    const jstDate = new Date(jstInput.value);
-    const utcDate = new Date(jstDate.getTime() - (9 * 60 * 60 * 1000));
-    
-    utcResult.textContent = formatFull(utcDate);
-    copyText.value = `日本時間 ${formatShort(jstDate)}、UTC ${formatShort(utcDate)}`;
-}
-
-// UTCからJSTを計算
-function updateFromUTC() {
-    if (!utcInput.value) return;
-    const utcDate = new Date(utcInput.value);
-    const jstDate = new Date(utcDate.getTime() + (9 * 60 * 60 * 1000));
-    
-    jstResult.textContent = formatFull(jstDate);
-    copyText.value = `UTC ${formatShort(utcDate)}、日本時間 ${formatShort(jstDate)}`;
-}
-
-// イベントリスナー
-jstInput.addEventListener('input', updateFromJST);
-utcInput.addEventListener('input', updateFromUTC);
-
-// コピー機能
-document.getElementById('copyBtn').addEventListener('click', () => {
-    if (!copyText.value) return;
-    copyText.select();
+// クリップボードへコピー
+function copyToClipboard() {
+    const copyArea = document.getElementById('copyArea');
+    copyArea.select();
     document.execCommand('copy');
-    alert('コピーしました！');
-});
+    
+    const btn = document.querySelector('.copy-btn');
+    const originalText = btn.innerText;
+    btn.innerText = 'コピーしました！';
+    btn.style.background = '#10b981';
+    
+    setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.background = '#8b5cf6';
+    }, 2000);
+}
+
+// 入力イベントリスナー
+document.getElementById('jstInput').addEventListener('input', () => updateConversion('jstToUtc'));
+document.getElementById('utcInput').addEventListener('input', () => updateConversion('utcToJst'));
