@@ -2,19 +2,27 @@
 function openTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    
     document.getElementById(tabId).classList.add('active');
     event.currentTarget.classList.add('active');
 }
 
-// 時間変換ロジック
 const jstInput = document.getElementById('jstInput');
 const utcInput = document.getElementById('utcInput');
 const utcResult = document.getElementById('utcResult');
 const jstResult = document.getElementById('jstResult');
 const copyText = document.getElementById('copyText');
 
-// 「m/d h:mm」形式にフォーマットする関数
+// 初期値（現在時刻）の設定
+window.onload = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    const nowString = now.toISOString().slice(0, 16);
+    jstInput.value = nowString;
+    utcInput.value = nowString;
+    updateFromJST(); // 初期表示実行
+};
+
+// 共通フォーマット (m/d h:mm)
 function formatDateTime(date) {
     const m = date.getMonth() + 1;
     const d = date.getDate();
@@ -23,27 +31,30 @@ function formatDateTime(date) {
     return `${m}/${d} ${h}:${min}`;
 }
 
-// JST -> UTC 変換
-jstInput.addEventListener('input', () => {
+// 結果表示用 (yyyy/m/d h:mm)
+function formatFull(date) {
+    return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+}
+
+function updateFromJST() {
     if (!jstInput.value) return;
     const jstDate = new Date(jstInput.value);
     const utcDate = new Date(jstDate.getTime() - (9 * 60 * 60 * 1000));
-    
-    utcResult.textContent = utcDate.toLocaleString('ja-JP');
+    utcResult.textContent = formatFull(utcDate);
     copyText.value = `日本時間 ${formatDateTime(jstDate)}、UTC ${formatDateTime(utcDate)}`;
-});
+}
 
-// UTC -> JST 変換
-utcInput.addEventListener('input', () => {
+function updateFromUTC() {
     if (!utcInput.value) return;
     const utcDate = new Date(utcInput.value);
     const jstDate = new Date(utcDate.getTime() + (9 * 60 * 60 * 1000));
-    
-    jstResult.textContent = jstDate.toLocaleString('ja-JP');
+    jstResult.textContent = formatFull(jstDate);
     copyText.value = `UTC ${formatDateTime(utcDate)}、日本時間 ${formatDateTime(jstDate)}`;
-});
+}
 
-// コピー機能
+jstInput.addEventListener('input', updateFromJST);
+utcInput.addEventListener('input', updateFromUTC);
+
 document.getElementById('copyBtn').addEventListener('click', () => {
     copyText.select();
     document.execCommand('copy');
