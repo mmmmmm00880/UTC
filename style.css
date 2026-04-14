@@ -1,117 +1,147 @@
+/* アジサイ・テーマ: 薄紫 (#DCD6F7), 淡い青 (#A6B1E1), 清潔感のある白 */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
     min-height: 100vh;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: flex-start;
+    padding: 15px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #424874;
 }
 
 .container {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
+}
+
+.card {
     background: #ffffff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(66, 72, 116, 0.08);
 }
 
-h2 {
+h1 {
+    font-size: 1.4rem;
     text-align: center;
-    color: #4834d4;
-    margin-top: 0;
+    margin-bottom: 24px;
+    color: #424874;
 }
 
-/* タブスタイル */
-.tab-menu {
+/* タブデザイン */
+.tabs {
     display: flex;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #6c5ce7;
+    background: #f4f7ff;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 24px;
 }
 
-.tab-menu button {
+.tab-btn {
     flex: 1;
-    padding: 10px;
     border: none;
-    background: #fff;
-    color: #6c5ce7;
+    padding: 12px;
+    background: transparent;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.3s;
+    color: #a6b1e1;
+    border-radius: 10px;
+    transition: 0.3s ease;
 }
 
-.tab-menu button.active {
-    background: #6c5ce7;
-    color: #fff;
+.tab-btn.active {
+    background: #ffffff;
+    color: #424874;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-/* 入力・出力エリア */
-.panel {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* 入力エリア */
+.input-group {
+    margin-bottom: 20px;
 }
 
 label {
-    font-size: 0.9rem;
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
     font-weight: bold;
-    color: #333;
 }
 
 input[type="datetime-local"] {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 14px;
+    border: 2px solid #f0f0f5;
+    border-radius: 12px;
     font-size: 1rem;
+    color: #424874;
+    outline: none;
+    background-color: #fafaff;
 }
 
-.result-box {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #4834d4;
+input:focus {
+    border-color: #dcd6f7;
 }
 
-.time-display {
-    font-size: 1.2rem;
+/* 結果表示 */
+.result-group {
+    background: #f9f9ff;
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    border-left: 5px solid #dcd6f7;
+}
+
+.result-label {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.result-display {
+    font-size: 1.3rem;
     font-weight: bold;
-    color: #4834d4;
     margin-top: 5px;
-    white-space: pre-wrap;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+/* コピーセクション */
+.copy-section {
+    border-top: 2px dashed #f0f0f5;
+    padding-top: 20px;
 }
 
 textarea {
     width: 100%;
-    height: 60px;
+    height: 64px;
+    border: 1px solid #eee;
+    background: #fdfdff;
+    border-radius: 12px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #fdfdfd;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    color: #666;
     resize: none;
-    color: #555;
+    margin-bottom: 12px;
 }
 
 .copy-btn {
-    padding: 12px;
+    width: 100%;
+    padding: 15px;
+    background-color: #a6b1e1;
+    color: white;
     border: none;
-    border-radius: 8px;
-    background: #4834d4;
-    color: #fff;
-    font-size: 1rem;
+    border-radius: 12px;
     font-weight: bold;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
-.copy-btn:active {
-    opacity: 0.8;
+.copy-btn:hover {
+    background-color: #424874;
 }
